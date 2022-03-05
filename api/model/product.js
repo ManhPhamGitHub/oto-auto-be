@@ -27,8 +27,17 @@ const newSchema = new mongoose.Schema({
         type:Array
     },
     reviewsCustomer:[{
-        type: mongoose.Types.ObjectId,
-        ref: 'customer'
+        idCustomer:{
+            type: mongoose.Types.ObjectId,
+            ref: 'customer'
+        },
+        nameCustomer:{
+            type:String
+        },
+        review:{
+            type:String
+        }
+        
     }]
 }) 
 

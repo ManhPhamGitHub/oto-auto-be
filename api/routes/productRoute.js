@@ -5,6 +5,7 @@ const Router = (app)=>{
     app.post('/product',controller.addProduct)
     app.put('/product/:id',controller.updateProduct)
     app.delete('/product/:id',controller.deleteProduct)
+    app.put('/product/review/:id',controller.reviewProduct)
 }
 
 module.exports = Router

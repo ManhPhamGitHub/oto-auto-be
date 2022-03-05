@@ -1,16 +1,24 @@
 const modelProduct = require('../model/product')
+const modelCustomer = require('../model/customer')
+
 const path = require("path")
 const fs = require('fs')
 const getProduct = async (req,res) => {
-    let textSearch = req.query.q
-    const regex = {name:({$regex:textSearch,$options:'i'})}
-    const getProduct = await modelProduct.find(regex,{"__v": 0}).populate({
-        path:"reviewsCustomer"
-    })
-    res.send({"message":"get product success","data":getProduct})
+    try {
+        let textSearch = req.query.q
+        const regex = {name:({$regex:textSearch,$options:'i'})}
+        const getProduct = await modelProduct.find(regex,{"__v": 0}).populate({
+            path:"reviewsCustomer"
+        })
+        res.send({"message":"get product success","data":getProduct})
+    } catch (error) {
+        res.send({"error":error})
+    }
+   
 }
 const addProduct = async (req,res) => {
-    let file = req.files
+    try {
+        let file = req.files
     let data = req.body
     let arrImg = []
     for(let i = 0; i < file.length; i++){
@@ -26,9 +34,14 @@ const addProduct = async (req,res) => {
         path:"reviewsCustomer"
     })
     res.send({"message":"addProduct success","data":getProduct})
+    } catch (error) {
+        res.send({"error":error})
+    }
+    
 }
 const updateProduct = async (req,res) => {
-    let id = req.params.id
+    try{
+        let id = req.params.id
         let file = req.files
         let data = req.body
         let arrImg = []
@@ -50,9 +63,14 @@ const updateProduct = async (req,res) => {
             path:"reviewsCustomer"
         })
         res.send({"message":"updateProduct success","data":getProduct})
+    }catch(error){
+        res.send({"error":error})
+    }
+    
 }
 const deleteProduct = async (req,res) => {
-    const id = req.params.id
+    try {
+        const id = req.params.id
     const deleteItem = await modelProduct.findByIdAndDelete(id)
     let textSearch = req.query.q
     const regex = {name:({$regex:textSearch,$options:'i'})}
@@ -60,6 +78,42 @@ const deleteProduct = async (req,res) => {
         path:"reviewsCustomer"
     })
     res.send({"message":"deleteProduct success","data":getProduct})
+    } catch (error) {
+        res.send({"error":error})
+
+    }
+    
+}
+
+
+const reviewProduct = async (req, res) => {
+    try {
+        const review = req.body.review
+    const idCustomer = req.body.idCustomer
+    const idProduct = req.params.id
+    const updateCustomer = await modelCustomer.findByIdAndUpdate(idCustomer,{
+        $push:{
+            reviewsProduct:idProduct
+        }
+    })
+    const updateItem = await modelProduct.findByIdAndUpdate(idProduct, {
+        $push:{
+            reviewsCustomer:{idCustomer,review,nameCustomer:updateCustomer.nameCustomer}
+        }
+    })
+    
+    
+    const textSearch = req.query.q
+    const regex = {name:({$regex:textSearch,$options:'i'})}
+    const getOrder = await modelProduct.find(regex, { "__v": 0 }).populate({
+        path: 'reviewsCustomer',
+    })
+    res.send({ "message": "update Order success", "data": getOrder })
+    } catch (error) {
+        res.send({"error":error})
+    }
+    
+    
 }
 
 module.exports = {
@@ -67,4 +121,5 @@ module.exports = {
     addProduct,
     updateProduct,
     deleteProduct,
+    reviewProduct
 }
