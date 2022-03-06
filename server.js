@@ -7,7 +7,7 @@ var express = require('express'),
   multer = require('multer'),
   path = require('path')
   mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/quiz_app',
+mongoose.connect('mongodb+srv://manh278:manh278@cluster0.5bby5.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
 {useNewUrlParser: true, useUnifiedTopology: true}).then(() => {
   console.log("Connected !!!")
 }).catch(err => {
