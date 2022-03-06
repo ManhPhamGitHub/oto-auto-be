@@ -1,5 +1,5 @@
 const modelCustomer = require('../model/customer')
-const modelCart = require('../model/Cart')
+const modelCart = require('../model/cart')
 
 
 const getCustomer = async (req,res) => {
