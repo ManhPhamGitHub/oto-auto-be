@@ -1,5 +1,7 @@
+const {url} = require('../config')
 const modelProduct = require('../model/product')
 const modelCustomer = require('../model/customer')
+
 
 const path = require("path")
 const fs = require('fs')
@@ -18,13 +20,14 @@ const getProduct = async (req,res) => {
 }
 const addProduct = async (req,res) => {
     try {
-        let file = req.files
+    let file = req.files
     let data = req.body
     let arrImg = []
     for(let i = 0; i < file.length; i++){
-        var url = `http://localhost:3001/${file[i].filename}`
+        var url = `${url}${file[i].filename}`
         arrImg.push(url)
     }
+    console.log(arrImg)
     data["imageProduct"] = arrImg
     const addItem = await modelProduct.create(data)
 
@@ -46,13 +49,13 @@ const updateProduct = async (req,res) => {
         let data = req.body
         let arrImg = []
         for(let i = 0; i < file.length; i++){
-            var url = `http://localhost:3001/${file[i].filename}`
+            var url = `${url}${file[i].filename}`
             arrImg.push(url)
         }
         const findUploadItem = await modelProduct.findById(id)
         const oldImgUrl = findUploadItem.imageProduct
         for(var i = 0;i<oldImgUrl.length; i++){
-            fs.unlink(path.join(`public/images/${oldImgUrl[i].slice(22)}`), () => {})
+            fs.unlink(path.join(__dirname,`public/images/${oldImgUrl[i].slice(url.length)}`), () => {})
         }
         data["imageProduct"] = arrImg
         let updateItem = await modelProduct.findByIdAndUpdate(id,data)
@@ -70,7 +73,7 @@ const updateProduct = async (req,res) => {
 }
 const deleteProduct = async (req,res) => {
     try {
-        const id = req.params.id
+    const id = req.params.id
     const deleteItem = await modelProduct.findByIdAndDelete(id)
     let textSearch = req.query.q
     const regex = {name:({$regex:textSearch,$options:'i'})}
