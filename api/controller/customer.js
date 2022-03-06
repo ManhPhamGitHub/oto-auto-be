@@ -15,9 +15,8 @@ const addCustomer = async (req,res) => {
         const data = req.body
     const addItem = await modelCustomer.create(data)
     const addCart = await modelCart.create({idCustomer:addItem._id})
-    console.log(addCart,"addCArt ")
     const updateCustomer = await modelCustomer.findByIdAndUpdate(addItem._id,{idCart:addCart._id})
-    res.send({"message":"add Customer success","data":addCart})
+    res.send({"message":"add Customer success","data":updateCustomer})
     } catch (error) {
         res.send({"error":error})
     }
