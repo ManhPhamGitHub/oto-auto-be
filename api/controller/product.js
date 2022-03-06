@@ -48,6 +48,7 @@ const updateProduct = async (req,res) => {
         let file = req.files
         let data = req.body
         let arrImg = []
+        console.log(`${url}${file[0].filename}`)
         for(let i = 0; i < file.length; i++){
             var linkImg = `${url}${file[i].filename}`
             arrImg.push(linkImg)
