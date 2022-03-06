@@ -24,8 +24,8 @@ const addProduct = async (req,res) => {
     let data = req.body
     let arrImg = []
     for(let i = 0; i < file.length; i++){
-        var url = `${url}${file[i].filename}`
-        arrImg.push(url)
+        var linkImg = `${url}${file[i].filename}`
+        arrImg.push(linkImg)
     }
     console.log(arrImg)
     data["imageProduct"] = arrImg
@@ -49,8 +49,8 @@ const updateProduct = async (req,res) => {
         let data = req.body
         let arrImg = []
         for(let i = 0; i < file.length; i++){
-            var url = `${url}${file[i].filename}`
-            arrImg.push(url)
+            var linkImg = `${url}${file[i].filename}`
+            arrImg.push(linkImg)
         }
         const findUploadItem = await modelProduct.findById(id)
         const oldImgUrl = findUploadItem.imageProduct
