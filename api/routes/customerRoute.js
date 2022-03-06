@@ -5,6 +5,8 @@ const Router = (app)=>{
     app.post('/customer',controller.addCustomer)
     app.put('/customer/:id',controller.updateCustomer)
     app.delete('/customer/:id',controller.deleteCustomer)
+    app.post('/customer/login',controller.loginCustomer)
+
 }
 
 module.exports = Router

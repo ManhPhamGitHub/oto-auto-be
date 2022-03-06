@@ -59,9 +59,23 @@ const deleteCustomer = async (req,res) => {
     }
 }
 
+const loginCustomer = async (req,res)=>{
+    const data = req.body
+    const findCustomer = await modelCustomer.findOne({
+        emailCustomer:data.emailCustomer,
+        password:data.password
+    })
+    if(findCustomer){
+        return res.send({"message":"login success","isLogin":true,"Customer":findCustomer})
+    }else{
+        return res.send({"message":"login failure","isLogin":false})
+    }
+}
+
 module.exports = {
     getCustomer,
     addCustomer,
     updateCustomer,
-    deleteCustomer
+    deleteCustomer,
+    loginCustomer
 }
