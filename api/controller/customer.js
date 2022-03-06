@@ -17,12 +17,7 @@ const addCustomer = async (req,res) => {
     const addCart = await modelCart.create({idCustomer:addItem._id})
     console.log(addCart,"addCArt ")
     const updateCustomer = await modelCustomer.findByIdAndUpdate(addItem._id,{idCart:addCart._id})
-    const textSearch = req.query.q
-    const regex = {name:({$regex:textSearch,$options:'i'})}
-    const getCustomer = await modelCustomer.find(regex,{"__v": 0}).populate({
-        path: 'idCart listOrder reviewsProduct'
-    })
-    res.send({"message":"add Customer success","data":getCustomer})
+    res.send({"message":"add Customer success","data":addCart})
     } catch (error) {
         res.send({"error":error})
     }
