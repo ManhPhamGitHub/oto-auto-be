@@ -1,6 +1,7 @@
 const {url} = require('../config')
 const modelProduct = require('../model/product')
 const modelCustomer = require('../model/customer')
+const modelCart = require('../model/cart')
 
 
 const path = require("path")
@@ -123,9 +124,9 @@ const reviewProduct = async (req, res) => {
 const addProductToCart = async (req,res) => {
     const idCart = req.body.idCart
     const idProduct = req.params.id
-    const updateCart = await modelCart.findByIdAndUpdate(idCart,{$push:{
+    const updateCart = await modelCart.findByIdAndUpdate(idCart,{$addToSet:{
         listProduct:idProduct
-    }})
+    }},{new:true})
     res.send({"message":"update Cart success","data":updateCart})
 }
 
