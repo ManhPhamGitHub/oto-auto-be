@@ -5,8 +5,14 @@ const newSchema = new mongoose.Schema({
         ref: 'customer'
     },
     listProduct:[{
-        type: mongoose.Types.ObjectId,
-        ref: 'product'
+        product:{
+            type: mongoose.Types.ObjectId,
+            ref: 'product'
+        },
+        amountProduct:{
+            type:Number,
+            default:1
+        }       
     }]
 }) 
 
