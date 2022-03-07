@@ -12,7 +12,11 @@ const getCustomer = async (req,res) => {
 }
 const addCustomer = async (req,res) => {
     try {
-        const data = req.body
+    const data = req.body
+    const findCustomer = await modelCustomer.findOne({emailCustomer:data.emailCustomer})
+    if(findCustomer){
+        return res.send({"error":"error","message":"tai khoan da ton tai"})
+    }
     const addItem = await modelCustomer.create(data)
     const addCart = await modelCart.create({idCustomer:addItem._id})
     const updateCustomer = await modelCustomer.findByIdAndUpdate(addItem._id,{idCart:addCart._id}, {
