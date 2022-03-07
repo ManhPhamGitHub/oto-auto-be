@@ -19,6 +19,7 @@ const updateCart = async (req,res) => {
     const data = req.body
     const id = req.params.id
     const updateItem = await modelCart.findByIdAndUpdate(id,data,{new:true})
+    console.log(updateItem)
     res.send({"message":"update Cart success","data":updateItem})
 }
 
