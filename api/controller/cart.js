@@ -17,6 +17,7 @@ const addCart = async (req,res) => {
 
 const updateCart = async (req,res) => {
     const data = req.body
+    console.log(data)
     const id = req.params.id
     const updateItem = await modelCart.findByIdAndUpdate(id,data,{new:true})
     console.log(updateItem)
