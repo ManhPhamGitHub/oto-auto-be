@@ -120,10 +120,20 @@ const reviewProduct = async (req, res) => {
     
 }
 
+const addProductToCart = async (req,res) => {
+    const idCart = req.body.idCart
+    const idProduct = req.params.id
+    const updateCart = await modelCart.findByIdAndUpdate(idCart,{$push:{
+        listProduct:idProduct
+    }})
+    res.send({"message":"update Cart success","data":updateCart})
+}
+
 module.exports = {
     getProduct,
     addProduct,
     updateProduct,
     deleteProduct,
-    reviewProduct
+    reviewProduct,
+    addProductToCart
 }

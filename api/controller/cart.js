@@ -2,9 +2,8 @@ const modelCart = require('../model/cart')
 
 
 const getCart = async (req,res) => {
-    const textSearch = req.query.q
-    const regex = {name:({$regex:textSearch,$options:'i'})}
-    const getCart = await modelCart.find(regex,{"__v": 0}).populate('idCustomer')
+    const id = req.params.id
+    const getCart = await modelCart.findById(id,{"__v": 0}).populate('idCustomer')
     res.send({"message":"get Cart success","data":getCart})
 }
 const addCart = async (req,res) => {
@@ -35,9 +34,10 @@ const deleteCart = async (req,res) => {
     res.send({"message":"delete Cart success","data":getCart})
 }
 
+
 module.exports = {
     getCart,
     addCart,
     updateCart,
-    deleteCart
+    deleteCart,
 }
