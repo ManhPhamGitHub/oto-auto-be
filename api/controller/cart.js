@@ -18,11 +18,8 @@ const addCart = async (req,res) => {
 const updateCart = async (req,res) => {
     const data = req.body
     const id = req.params.id
-    const textSearch = req.query.q
-    const regex = {name:({$regex:textSearch,$options:'i'})}
-    const updateItem = await modelCart.findByIdAndUpdate(id,data)
-    const getCart = await modelCart.find(regex,{"__v": 0}).populate('idCustomer')
-    res.send({"message":"update Cart success","data":getCart})
+    const updateItem = await modelCart.findByIdAndUpdate(id,data,{new:true})
+    res.send({"message":"update Cart success","data":updateItem})
 }
 
 const deleteCart = async (req,res) => {
