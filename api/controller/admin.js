@@ -15,6 +15,10 @@ const getAdmin = async (req,res) => {
 }
 const addAdmin = async (req,res) => {
     const data = req.body
+    const findAdmin = await modelAdmin.findOne({emailAdmin:data.emailAdmin})
+    if(findAdmin){
+        return res.send({"error":"error","message":"tai khoan da ton tai"})
+    }
     const addItem = await modelAdmin.create(data)
     res.send({"message":"addAdmin success"})
 }
