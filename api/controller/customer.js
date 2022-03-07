@@ -15,14 +15,14 @@ const addCustomer = async (req,res) => {
     const data = req.body
     const findCustomer = await modelCustomer.findOne({emailCustomer:data.emailCustomer})
     if(findCustomer){
-        return res.send({"error":"error","message":"tai khoan da ton tai"})
+        return res.send({"error":"error","message":"tai khoan da ton tai","success": false})
     }
     const addItem = await modelCustomer.create(data)
     const addCart = await modelCart.create({idCustomer:addItem._id})
     const updateCustomer = await modelCustomer.findByIdAndUpdate(addItem._id,{idCart:addCart._id}, {
         new: true
       })
-    res.send({"message":"add Customer success","data":updateCustomer})
+    res.send({"message":"add Customer success","data":updateCustomer,"success": true})
     } catch (error) {
         res.send({"error":error})
     }
