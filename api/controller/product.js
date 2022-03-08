@@ -122,7 +122,7 @@ const reviewProduct = async (req, res) => {
 }
 
 const addProductToCart = async (req,res) => {
-    const idCart = req.body.idCart
+    const idCart = req.body.idCart 
     const idProduct = req.params.id
     const updateCart = await modelCart.findByIdAndUpdate(idCart,{$addToSet:{
         listProduct:idProduct
