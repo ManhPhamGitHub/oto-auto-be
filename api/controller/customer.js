@@ -61,10 +61,17 @@ const deleteCustomer = async (req,res) => {
 
 const loginCustomer = async (req,res)=>{
     const data = req.body
+console.log(data,"Dataa")
     const findCustomer = await modelCustomer.findOne({
         emailCustomer:data.emailCustomer,
         password:data.password
     })
+    const test = await modelCustomer.find({
+        emailCustomer:data.emailCustomer,
+        password:data.password
+    })
+    console.log(test,"tessttstst")
+    console.log(findCustomer,"findCustomer")
     if(findCustomer){
         return res.send({"message":"login success","isLogin":true,"Customer":findCustomer})
     }else{
