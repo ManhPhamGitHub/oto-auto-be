@@ -66,12 +66,7 @@ console.log(data,"Dataa")
         emailCustomer:data.emailCustomer,
         password:data.password
     })
-    const test = await modelCustomer.find({
-        emailCustomer:data.emailCustomer,
-        password:data.password
-    })
-    console.log(test,"tessttstst")
-    console.log(findCustomer,"findCustomer")
+  
     if(findCustomer){
         return res.send({"message":"login success","isLogin":true,"Customer":findCustomer})
     }else{
