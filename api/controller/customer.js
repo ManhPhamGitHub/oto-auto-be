@@ -13,15 +13,22 @@ const getCustomer = async (req,res) => {
 const addCustomer = async (req,res) => {
     try {
     const data = req.body
+    console.log(data,"Dada")
     const findCustomer = await modelCustomer.findOne({emailCustomer:data.emailCustomer})
     if(findCustomer){
         return res.send({"error":"error","message":"tai khoan da ton tai","success": false})
     }
+    console.log(findCustomer,"findCustomer")
     const addItem = await modelCustomer.create(data)
+    console.log(addItem,"addItem")
     const addCart = await modelCart.create({idCustomer:addItem._id})
+    console.log(addCart,"addCart")
+
     const updateCustomer = await modelCustomer.findByIdAndUpdate(addItem._id,{idCart:addCart._id}, {
         new: true
       })
+      console.log(updateCustomer,"updateCustomer")
+
     res.send({"message":"add Customer success","data":updateCustomer,"success": true})
     } catch (error) {
         res.send({"error":error})
