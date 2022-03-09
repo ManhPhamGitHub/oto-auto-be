@@ -3,7 +3,7 @@ const modelCart = require('../model/cart')
 
 const getCart = async (req,res) => {
     const id = req.params.id
-    const getCart = await modelCart.findById(id,{"__v": 0}).populate('idCustomer listProduct')
+    const getCart = await modelCart.findById(id,{"__v": 0}).populate('idCustomer listProduct.product')
     res.send({"message":"get Cart success","data":getCart})
 }
 const addCart = async (req,res) => {
