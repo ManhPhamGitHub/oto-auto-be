@@ -124,10 +124,9 @@ const reviewProduct = async (req, res) => {
 const addProductToCart = async (req,res) => {
     const data = req.body 
     const idCart= req.params.id
-    console.log(idCart,"dsadsadsa")
     const updateCart = await modelCart.findByIdAndUpdate(idCart,{$addToSet:{
         listProduct:data.listProduct
-    }},{new:true})
+    }},{new:true}).populate('idCustomer listProduct.product')
     res.send({"message":"update Cart success","data":updateCart})
 }
 

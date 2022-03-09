@@ -11,7 +11,7 @@ const addCart = async (req,res) => {
     const addItem = await modelCart.create(data)
     const textSearch = req.query.q
     const regex = {name:({$regex:textSearch,$options:'i'})}
-    const getCart = await modelCart.find(regex,{"__v": 0}).populate('idCustomer')
+    const getCart = await modelCart.find(regex,{"__v": 0}).populate('idCustomer listProduct.product')
     res.send({"message":"add Cart success","data":getCart})
 }
 
@@ -20,7 +20,7 @@ const updateCart = async (req,res) => {
     console.log(data)
     const id = req.params.id
     console.log(id)
-    const updateItem = await modelCart.findByIdAndUpdate(id,data,{new:true})
+    const updateItem = await modelCart.findByIdAndUpdate(id,data,{new:true}).populate('idCustomer listProduct.product')
     console.log(updateItem)
     res.send({"message":"update Cart success","data":updateItem})
 }
@@ -30,7 +30,7 @@ const deleteCart = async (req,res) => {
     const deleteItem = await modelCart.findByIdAndDelete(id)
     const textSearch = req.query.q
     const regex = {name:({$regex:textSearch,$options:'i'})}
-    const getCart = await modelCart.find(regex,{"__v": 0}).populate('idCustomer')
+    const getCart = await modelCart.find(regex,{"__v": 0}).populate('idCustomer').populate('idCustomer listProduct.product')
     res.send({"message":"delete Cart success","data":getCart})
 }
 
