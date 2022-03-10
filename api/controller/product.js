@@ -105,15 +105,8 @@ const reviewProduct = async (req, res) => {
         $push:{
             reviewsCustomer:{idCustomer,review,nameCustomer:updateCustomer.nameCustomer}
         }
-    })
-    
-    
-    const textSearch = req.query.q
-    const regex = {name:({$regex:textSearch,$options:'i'})}
-    const getOrder = await modelProduct.find(regex, { "__v": 0 }).populate({
-        path: 'reviewsCustomer',
-    })
-    res.send({ "message": "update Order success", "data": getOrder })
+    },{new:true})
+    res.send({ "message": "review product success", "data": updateItem })
     } catch (error) {
         res.send({"error":error})
     }
