@@ -17,12 +17,9 @@ const getOrder = async (req, res) => {
 const addOrder = async (req, res) => {
     try {
     const data = req.body
-    console.log(data)
     const addItem = await modelOrder.create(data)
-    console.log(addItem)
     const customer = await modelCustomer.findByIdAndUpdate(data.idCustomer,
         { $push: { listProduct:addItem._id} })  
-        console.log(customer)
     const textSearch = req.query.q
     const regex = {name:({$regex:textSearch,$options:'i'})}
     const getOrder = await modelOrder.find(regex, { "__v": 0 }).populate({

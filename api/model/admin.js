@@ -15,6 +15,11 @@ const newSchema = new mongoose.Schema({
     revenueDay:{
         type:Number,
         default:0
+    },
+    role:{
+        type:String,
+        default:"admin"
+        // 1 : admin , 2 : superAdmin
     }
 }) 
 
