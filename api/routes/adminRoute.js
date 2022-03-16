@@ -7,7 +7,7 @@ const Router = (app)=>{
     app.put('/admin/:id',controller.updateAdmin)
     app.delete('/admin/:id',controller.deleteAdmin)
     app.post('/admin/login',controller.loginAdmin)
-    app.put('/admin/author',controller.authorAdmin)
+    app.put('/admin/author/:id',controller.authorAdmin)
 
 }
 
