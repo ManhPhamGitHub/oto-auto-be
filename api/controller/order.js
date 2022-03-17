@@ -4,7 +4,6 @@ const modelCustomer = require('../model/customer')
 const getOrder = async (req, res) => {
     try {
         const statusOrder = req.query.statusOrder
-        console.log({statusOrder},"statusOrder statusOrder")
         const getOrder = await modelOrder.find({statusOrder:statusOrder}, { "__v": 0 }).populate({
             path: 'idCustomer listProduct',
         })
@@ -50,6 +49,7 @@ const deleteOrder = async (req, res) => {
     try {
         const id = req.params.id
         const deleteItem = await modelOrder.findByIdAndDelete(id)
+        console.log(deleteItem,"deleteItem")
         await modelCustomer.findByIdAndUpdate(deleteItem.idCustomer._id,
         { $pull: { listProduct: addItem._id } })
         const getOrder = await modelOrder.find({}, { "__v": 0 }).populate({
