@@ -19,6 +19,7 @@ const newSchema = new mongoose.Schema({
     role:{
         type:String,
         default:"admin"
+        
         // 1 : admin , 2 : superAdmin
     }
 }) 

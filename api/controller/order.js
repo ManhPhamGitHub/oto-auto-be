@@ -66,10 +66,26 @@ const deleteOrder = async (req, res) => {
         res.send({"error":error})
     }
 }
+const submitOrder = async (req, res) => {
+    try {
+    const data = req.body // statusOrder
+    const id = req.params.id // id Order
+    const updateItem = await modelOrder.findByIdAndUpdate(id, {statusOrder:data.statusOrder})
+    const textSearch = req.query.q
+    const regex = {name:({$regex:textSearch,$options:'i'})}
+    const getOrder = await modelOrder.find(regex, { "__v": 0 }).populate({
+        path: 'idCustomer listProduct',
+    })
+    res.send({ "message": "update Order success", "data": getOrder })
+    } catch (error) {
+        res.send({"error":error})
+    }
+}
 
 module.exports = {
     getOrder,
     addOrder,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+    submitOrder
 }

@@ -4,7 +4,8 @@ const dateVN = moment.tz(Date.now(), "Asia/Bangkok");
 const newSchema = new mongoose.Schema({
     StatusOrder:{
         type:String,
-        enum:["success","failure"]
+        enum:["success","failure","pending"],
+        default:"pending"
     },
     timeOder:{
         type:Date,
