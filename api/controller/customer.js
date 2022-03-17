@@ -82,12 +82,15 @@ console.log(data,"Dataa")
 
 const changePasswordCustomer = async (req,res) => {
     try {
-    const data = req.body // {oldPassword }
+    const data = req.body // {oldPassword , newPassword }
     const id = req.params.id 
+    console.log(id,"id")
     const updateCustomer= await modelCustomer.findById(id)
+    console.log(updateCustomer,"updateCustomer")
     if(data.oldPassword !== updateCustomer.password) {
         return res.send({"error":"mật khẩu cũ không khớp"})
     }
+    console.log(data)
     const getCustomer = await modelCustomer.findByIdAndUpdate(id,{password:data.newPassword},{new:true})
     .populate({
         path: 'idCart listOrder reviewsProduct'
