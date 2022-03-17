@@ -4,7 +4,8 @@ const modelCustomer = require('../model/customer')
 const getOrder = async (req, res) => {
     try {
         const statusOrder = req.query.statusOrder
-        const getOrder = await modelOrder.find({statusOrder}, { "__v": 0 }).populate({
+        console.log({statusOrder},"statusOrder statusOrder")
+        const getOrder = await modelOrder.find({statusOrder:statusOrder}, { "__v": 0 }).populate({
             path: 'idCustomer listProduct',
         })
         res.send({ "message": "get Order success", "data": getOrder })
@@ -19,7 +20,7 @@ const addOrder = async (req, res) => {
     const data = req.body
     const addItem = await modelOrder.create(data)
     const customer = await modelCustomer.findByIdAndUpdate(data.idCustomer,
-        { $push: { listProduct:addItem._id} })  
+        { $push: { listOrder:addItem._id} })  
     const getOrder = await modelOrder.find({}, { "__v": 0 }).populate({
             path: 'idCustomer listProduct',
         })
@@ -49,7 +50,7 @@ const deleteOrder = async (req, res) => {
     try {
         const id = req.params.id
         const deleteItem = await modelOrder.findByIdAndDelete(id)
-        await modelCustomer.findByIdAndUpdate(data.idCustomer,
+        await modelCustomer.findByIdAndUpdate(deleteItem.idCustomer._id,
         { $pull: { listProduct: addItem._id } })
         const getOrder = await modelOrder.find({}, { "__v": 0 }).populate({
             path: 'idCustomer listProduct',

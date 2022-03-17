@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const moment = require('moment-timezone');
 const dateVN = moment.tz(Date.now(), "Asia/Bangkok");
 const newSchema = new mongoose.Schema({
-    StatusOrder:{
+    statusOrder:{
         type:String,
         enum:["success","failure","pending"],
         default:"pending"
