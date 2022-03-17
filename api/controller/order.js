@@ -3,28 +3,26 @@ const modelCustomer = require('../model/customer')
 
 const getOrder = async (req, res) => {
     try {
-        const textSearch = req.query.q
-        const regex = { name: ({ $regex: textSearch, $options: 'i' }) }
-        const getOrder = await modelOrder.find(regex, { "__v": 0 }).populate({
+        const statusOrder = req.query.statusOrder
+        const getOrder = await modelOrder.find(statusOrder, { "__v": 0 }).populate({
             path: 'idCustomer listProduct',
         })
         res.send({ "message": "get Order success", "data": getOrder })
     } catch (error) {
         res.send({"error":error})
-    }
-   
+    }   
 }
+
+
 const addOrder = async (req, res) => {
     try {
     const data = req.body
     const addItem = await modelOrder.create(data)
     const customer = await modelCustomer.findByIdAndUpdate(data.idCustomer,
         { $push: { listProduct:addItem._id} })  
-    const textSearch = req.query.q
-    const regex = {name:({$regex:textSearch,$options:'i'})}
-    const getOrder = await modelOrder.find(regex, { "__v": 0 }).populate({
-        path: 'idCustomer',
-    })
+    const getOrder = await modelOrder.find({}, { "__v": 0 }).populate({
+            path: 'idCustomer listProduct',
+        })
     res.send({ "message": "add Order success", "data": getOrder })
     } catch (error) {
         res.send({"error":error})
@@ -36,9 +34,7 @@ const updateOrder = async (req, res) => {
     const data = req.body
     const id = req.params.id
     const updateItem = await modelOrder.findByIdAndUpdate(id, data)
-    const textSearch = req.query.q
-    const regex = {name:({$regex:textSearch,$options:'i'})}
-    const getOrder = await modelOrder.find(regex, { "__v": 0 }).populate({
+    const getOrder = await modelOrder.find({}, { "__v": 0 }).populate({
         path: 'idCustomer listProduct',
     })
     res.send({ "message": "update Order success", "data": getOrder })
@@ -52,15 +48,12 @@ const updateOrder = async (req, res) => {
 const deleteOrder = async (req, res) => {
     try {
         const id = req.params.id
-    const deleteItem = await modelOrder.findByIdAndDelete(id)
-    await modelCustomer.findByIdAndUpdate(data.idCustomer,
+        const deleteItem = await modelOrder.findByIdAndDelete(id)
+        await modelCustomer.findByIdAndUpdate(data.idCustomer,
         { $pull: { listProduct: addItem._id } })
-
-    const textSearch = req.query.q
-    const regex = {name:({$regex:textSearch,$options:'i'})}
-    const getOrder = await modelOrder.find(regex, { "__v": 0 }).populate({
-        path: 'idCustomer listProduct',
-    })
+        const getOrder = await modelOrder.find({}, { "__v": 0 }).populate({
+            path: 'idCustomer listProduct',
+        })
     res.send({ "message": "delete Order success", "data": getOrder })
     } catch (error) {
         res.send({"error":error})
@@ -68,12 +61,10 @@ const deleteOrder = async (req, res) => {
 }
 const submitOrder = async (req, res) => {
     try {
-    const data = req.body // statusOrder
+    const statusOrder = req.body.statusOrder // statusOrder
     const id = req.params.id // id Order
-    const updateItem = await modelOrder.findByIdAndUpdate(id, {statusOrder:data.statusOrder})
-    const textSearch = req.query.q
-    const regex = {name:({$regex:textSearch,$options:'i'})}
-    const getOrder = await modelOrder.find(regex, { "__v": 0 }).populate({
+    const updateItem = await modelOrder.findByIdAndUpdate(id, {statusOrder})
+    const getOrder = await modelOrder.find({}, { "__v": 0 }).populate({
         path: 'idCustomer listProduct',
     })
     res.send({ "message": "update Order success", "data": getOrder })

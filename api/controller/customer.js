@@ -73,11 +73,28 @@ console.log(data,"Dataa")
         emailCustomer:data.emailCustomer,
         password:data.password
     })
-  
     if(findCustomer){
         return res.send({"message":"login success","isLogin":true,"Customer":findCustomer})
     }else{
         return res.send({"message":"login failure","isLogin":false})
+    }
+}
+
+const changePasswordCustomer = async (req,res) => {
+    try {
+    const data = req.body // {oldPassword }
+    const id = req.params.id 
+    const updateCustomer= await modelCustomer.findById(id)
+    if(data.oldPassword !== updateCustomer.password) {
+        return res.send({"error":"mật khẩu cũ không khớp"})
+    }
+    const getCustomer = await modelCustomer.findByIdAndUpdate(id,{password:data.newPassword},{new:true})
+    .populate({
+        path: 'idCart listOrder reviewsProduct'
+    })
+    res.send({"message":"update Customer success","data":getCustomer})
+    } catch (error) {
+        res.send({"error":error})
     }
 }
 
@@ -86,5 +103,6 @@ module.exports = {
     addCustomer,
     updateCustomer,
     deleteCustomer,
-    loginCustomer
+    loginCustomer,
+    changePasswordCustomer
 }

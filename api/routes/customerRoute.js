@@ -6,7 +6,7 @@ const Router = (app)=>{
     app.put('/customer/:id',controller.updateCustomer)
     app.delete('/customer/:id',controller.deleteCustomer)
     app.post('/customer/login',controller.loginCustomer)
-
+    app.put('/customer/changePassword/:id',controller.changePasswordCustomer)
 }
 
 module.exports = Router

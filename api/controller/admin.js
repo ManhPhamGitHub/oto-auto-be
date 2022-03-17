@@ -75,9 +75,10 @@ const loginAdmin = async (req, res) => {
 const authorAdmin = async (req, res) => {
     try {
         const data = req.body // {role} 
-        const id = req.params.id
+        const id = req.params.id 
         const updateItem = await modelAdmin.findByIdAndUpdate(id, { role: data.role })
-        res.send({ "message": "authorization admin success" })
+        const getAdmin = await modelAdmin.find()
+        res.send({ "message": "authorization admin success" ,"data": getAdmin})
     } catch (error) {
         res.send({ "error": error })
     }
