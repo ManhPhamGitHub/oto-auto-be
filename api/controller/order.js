@@ -3,10 +3,19 @@ const modelCustomer = require('../model/customer')
 
 const getOrder = async (req, res) => {
     try {
-        const statusOrder = req.query.statusOrder
-        const getOrder = await modelOrder.find({statusOrder:statusOrder}, { "__v": 0 }).populate({
-            path: 'idCustomer listProduct',
-        })
+        let statusOrder = req.query.statusOrder
+        let getOrder 
+        if(!statusOrder){
+            statusOrder = ""
+            getOrder = await modelOrder.find({}, { "__v": 0 }).populate({
+                path: 'idCustomer listProduct',
+            })
+        }else{
+            getOrder = await modelOrder.find({statusOrder:statusOrder}, { "__v": 0 }).populate({
+                path: 'idCustomer listProduct',
+            })
+        }
+       
         res.send({ "message": "get Order success", "data": getOrder })
     } catch (error) {
         res.send({"error":error})
